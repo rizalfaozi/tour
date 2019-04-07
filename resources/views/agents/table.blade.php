@@ -1,0 +1,42 @@
+<table class="table table-responsive" id="agents-table">
+    <thead>
+        <tr>
+        <th>Photo</th>
+        <th>Name</th>
+       
+      
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Gender</th>
+        <th>Type</th>
+        <th>Status</th>
+            <th colspan="3">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach($agents as $agents)
+        <tr>
+            <td>{!! $agents->photo !!}</td>
+            <td>{!! $agents->name !!}</td>
+          
+           
+            <td>{!! $agents->email !!}</td>
+            <td>{!! $agents->phone !!}</td>
+            <td>{!! $agents->address !!}</td>
+            <td>{!! $agents->gender !!}</td>
+            <td>{!! $agents->type !!}</td>
+            <td>{!! $agents->status !!}</td>
+            <td>
+                {!! Form::open(['route' => ['agents.destroy', $agents->id], 'method' => 'delete']) !!}
+                <div class='btn-group'>
+                    <a href="{!! route('agents.show', [$agents->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <a href="{!! route('agents.edit', [$agents->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                    {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                </div>
+                {!! Form::close() !!}
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
