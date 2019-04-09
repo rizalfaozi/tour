@@ -9,7 +9,7 @@
         <th>Phone</th>
         <th>Address</th>
         <th>Gender</th>
-        <th>Type</th>
+       
         <th>Status</th>
             <th colspan="3">Action</th>
         </tr>
@@ -17,16 +17,18 @@
     <tbody>
     @foreach($agents as $agents)
         <tr>
-            <td>{!! $agents->photo !!}</td>
+            <td><img width="50" height="50" src="{!! $agents->photo !!}" /></td>
             <td>{!! $agents->name !!}</td>
-          
-           
             <td>{!! $agents->email !!}</td>
             <td>{!! $agents->phone !!}</td>
             <td>{!! $agents->address !!}</td>
             <td>{!! $agents->gender !!}</td>
-            <td>{!! $agents->type !!}</td>
-            <td>{!! $agents->status !!}</td>
+            
+            <td> @if($agents->status>0)
+               Aktif
+             @else
+                Non Aktif
+             @endif</td>
             <td>
                 {!! Form::open(['route' => ['agents.destroy', $agents->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

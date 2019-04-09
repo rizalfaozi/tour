@@ -35,7 +35,7 @@ Route::resource('villages', 'villagesAPIController');
 
 Route::resource('roles', 'rolesAPIController');
 
-Route::resource('commissions', 'commissionsAPIController');
+
 
 Route::resource('districts', 'districtsAPIController');
 

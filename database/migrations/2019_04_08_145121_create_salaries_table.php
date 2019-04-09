@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatedistrictsTable extends Migration
+class CreatesalariesTable extends Migration
 {
 
     /**
@@ -13,12 +13,12 @@ class CreatedistrictsTable extends Migration
      */
     public function up()
     {
-        Schema::create('districts', function (Blueprint $table) {
+        Schema::create('salaries', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('province_id');
-             $table->integer('province_id')->unsigned();
-            $table->foreign('province_id')->references('id')->on('provinces')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('name');
+            $table->integer('user_id');
+            $table->string('total');
+            $table->string('type');
+            $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +31,6 @@ class CreatedistrictsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('districts');
+        Schema::drop('salaries');
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Commissions
+            Invoices
         </h1>
    </section>
    <div class="content">
@@ -11,9 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($commissions, ['route' => ['commissions.update', $commissions->id], 'method' => 'patch']) !!}
+                   {!! Form::model($invoices, ['route' => ['invoices.update', $invoices->id], 'method' => 'patch']) !!}
 
-                        @include('commissions.fields')
+                        @include('invoices.fields')
 
                    {!! Form::close() !!}
                </div>

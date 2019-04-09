@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Criteria\agentsCriteria;
+use Intervention\Image\ImageManagerStatic as Image;
+use File;
 
 class agentsController extends AppBaseController
 {
@@ -29,11 +32,12 @@ class agentsController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->agentsRepository->pushCriteria(new RequestCriteria($request));
+        $type = $request->get('type'); 
+        $this->agentsRepository->pushCriteria(new agentsCriteria($type));
         $agents = $this->agentsRepository->all();
 
         return view('agents.index')
-            ->with('agents', $agents);
+            ->with(['agents'=> $agents,'type'=>$type]);
     }
 
     /**
@@ -41,9 +45,10 @@ class agentsController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('agents.create');
+        $type = $request->get('type'); 
+        return view('agents.create')->with('type',$type);
     }
 
     /**
@@ -55,13 +60,47 @@ class agentsController extends AppBaseController
      */
     public function store(CreateagentsRequest $request)
     {
-        $input = $request->all();
+        $type = $request->get('type');  
+        // $input = $request->all();
+        $input['name'] = $request->name;
+        $input['email'] = $request->email;
+        $input['gender'] = $request->gender;
+        $input['role_id'] = 3;
+        $input['type'] = $type;
+        $input['phone'] = $request->phone;
+        $input['address'] = $request->address;
+
+
+         if($request->photo=='') 
+        {
+                    
+            $input['photo'] = '';      
+
+        }else{
+            $kode = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);    
+            $fileFormat = ".jpg";
+            $dir = "files/photo";
+            $fileName = $kode . time();
+            $fullPath = $dir."/".$fileName.$fileFormat;
+            File::makeDirectory($request->photo, 0777, true, true);
+
+            $img = Image::make($request->photo)->save($fullPath, 60);
+            $input['photo'] = $fullPath;
+             
+                     
+        }
+
+
+       
+        $input['password'] = bcrypt($request->pasword);
+        $input['status'] = $request->status;
 
         $agents = $this->agentsRepository->create($input);
 
         Flash::success('Agents saved successfully.');
 
-        return redirect(route('agents.index'));
+        return redirect(url('agents?type='.$type));
+       
     }
 
     /**
@@ -91,17 +130,18 @@ class agentsController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+        $type = $request->get('type'); 
         $agents = $this->agentsRepository->findWithoutFail($id);
 
         if (empty($agents)) {
             Flash::error('Agents not found');
 
-            return redirect(route('agents.index'));
+            return redirect(url('agents?type'.$type));
         }
 
-        return view('agents.edit')->with('agents', $agents);
+        return view('agents.edit')->with(['agents'=> $agents,'type'=>$type]);
     }
 
     /**
@@ -122,11 +162,41 @@ class agentsController extends AppBaseController
             return redirect(route('agents.index'));
         }
 
-        $agents = $this->agentsRepository->update($request->all(), $id);
+        $input['name'] = $request->name;
+        $input['email'] = $request->email;
+        $input['gender'] = $request->gender;
+        $input['role_id'] = 3;
+        $input['type'] = $agents->type;
+        $input['phone'] = $request->phone;
+        $input['address'] = $request->address;
 
+
+         if($request->photo=='') 
+        {
+                    
+            $input['photo'] = $agents->photo;    
+
+        }else{
+
+            unlink($agents->photo);
+            $kode = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);    
+            $fileFormat = ".jpg";
+            $dir = "files/photo";
+            $fileName = $kode . time();
+            $fullPath = $dir."/".$fileName.$fileFormat;
+            File::makeDirectory($request->photo, 0777, true, true);
+
+            $img = Image::make($request->photo)->save($fullPath, 60);
+            $input['photo'] = $fullPath;
+             
+                     
+        }
+        $input['status'] = $request->status;
+        $agents = $this->agentsRepository->update($input, $id);
+        
         Flash::success('Agents updated successfully.');
 
-        return redirect(route('agents.index'));
+        return redirect(url('agents?type='.$agents->type));
     }
 
     /**
@@ -139,7 +209,7 @@ class agentsController extends AppBaseController
     public function destroy($id)
     {
         $agents = $this->agentsRepository->findWithoutFail($id);
-
+        unlink($agents->photo); 
         if (empty($agents)) {
             Flash::error('Agents not found');
 
@@ -150,6 +220,6 @@ class agentsController extends AppBaseController
 
         Flash::success('Agents deleted successfully.');
 
-        return redirect(route('agents.index'));
+        return redirect(url('agents?type='.$agents->type));
     }
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatecommissionsTable extends Migration
+class CreatedistrictsTable extends Migration
 {
 
     /**
@@ -13,12 +13,11 @@ class CreatecommissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('commissions', function (Blueprint $table) {
+        Schema::create('districts', function (Blueprint $table) {
             $table->increments('id');
-             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('price');
-            $table->integer('status');
+             $table->integer('province_id')->unsigned();
+            $table->foreign('province_id')->references('id')->on('provinces')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('name');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +30,6 @@ class CreatecommissionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('commissions');
+        Schema::drop('districts');
     }
 }

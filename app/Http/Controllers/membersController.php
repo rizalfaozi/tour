@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use DB;
+
 
 class membersController extends AppBaseController
 {
@@ -43,7 +45,8 @@ class membersController extends AppBaseController
      */
     public function create()
     {
-        return view('members.create');
+        $provinsi = DB::table('provinces')->get();
+        return view('members.create')->with('provinsi', $provinsi);
     }
 
     /**
@@ -151,5 +154,29 @@ class membersController extends AppBaseController
         Flash::success('Members deleted successfully.');
 
         return redirect(route('members.index'));
+    }
+
+
+      public function kabupaten(request $request){
+
+       $kabupaten = DB::table('districts')->where('province_id',$request->id)->get();
+       return $kabupaten;
+
+    }
+
+
+     public function kecamatan(request $request){
+
+       $kecamatan = DB::table('subdistricts')->where('district_id',$request->id)->get();
+       return $kecamatan;
+
+    }
+
+
+      public function kelurahan(request $request){
+
+       $kelurahan = DB::table('villages')->where('subdistrict_id',$request->id)->get();
+       return $kelurahan;
+
     }
 }

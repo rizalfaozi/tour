@@ -2,8 +2,8 @@
 
 @section('content')
     <section class="content-header">
-        <h1 style="text-transform:capitalize; ">
-            {{ $type }}
+        <h1>
+            Salaries
         </h1>
     </section>
     <div class="content">
@@ -12,9 +12,9 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['url' => 'agents?type='.$type.'','enctype'=>'multipart/form-data']) !!}
+                    {!! Form::open(['route' => 'salaries.store']) !!}
 
-                        @include('agents.fields')
+                        @include('salaries.fields')
 
                     {!! Form::close() !!}
                 </div>

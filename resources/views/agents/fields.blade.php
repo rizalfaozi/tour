@@ -1,19 +1,7 @@
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', 'Nama Lengkap:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Role Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('role_id', 'Role Id:') !!}
-    {!! Form::number('role_id', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Password Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('password', 'Password:') !!}
-    {!! Form::text('password', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Email Field -->
@@ -22,40 +10,55 @@
     {!! Form::text('email', null, ['class' => 'form-control']) !!}
 </div>
 
+<?php if(Request::segment(3) !="edit"){?>
+<!-- Password Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('password', 'Password:') !!}
+    {!! Form::password('password', ['class' => 'form-control']) !!}
+</div>
+<?php } ?>
+
+
 <!-- Phone Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('phone', 'Phone:') !!}
+    {!! Form::label('phone', 'Telp:') !!}
     {!! Form::text('phone', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- photo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('photo', 'photo:') !!}
-    {!! Form::text('photo', null, ['class' => 'form-control']) !!}
+    {!! Form::file('photo', null, ['class' => 'form-control']) !!}
 </div>
+
+<?php if($agents->photo !=""){?>
+<div class="form-group col-sm-6">
+   
+   <img width="100" height="100" src="{{ '/'.$agents->photo }}">
+</div>
+
+<?php } ?>    
 
 <!-- Address Field -->
 <div class="form-group col-sm-12 col-lg-12">
-    {!! Form::label('address', 'Address:') !!}
+    {!! Form::label('address', 'Alamat:') !!}
     {!! Form::textarea('address', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Gender Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('gender', 'Gender:') !!}
-    {!! Form::text('gender', null, ['class' => 'form-control']) !!}
+    {!! Form::label('gender', 'Jenis Kelamin:') !!}<br>
+     {{ Form::radio('gender', 'pria', isset($agents) ? $agents->gender == 'pria' : false) }} Pria<br>
+    {{ Form::radio('gender', 'wanita', isset($agents) ? $agents->gender == 'wanita' : true) }} Wanita
 </div>
 
-<!-- Type Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('type', 'Type:') !!}
-    {!! Form::text('type', null, ['class' => 'form-control']) !!}
-</div>
+
 
 <!-- Status Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('status', 'Status:') !!}
-    {!! Form::number('status', null, ['class' => 'form-control']) !!}
+    {!! Form::label('status', 'Status:') !!}<br>
+     {{ Form::radio('status', 1, isset($agents) ? $agents->status == 1 : false) }} Yes<br>
+    {{ Form::radio('status', 0, isset($agents) ? $agents->status == 0 : true) }} No
 </div>
 
 <!-- Submit Field -->

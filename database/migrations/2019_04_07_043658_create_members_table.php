@@ -24,6 +24,7 @@ class CreatemembersTable extends Migration
             $table->string('alternative_phone');
             $table->text('address');
             $table->string('email');
+            $table->string('gender');
             $table->string('id_card'); // ktp
             $table->string('passport_number'); //passport
             $table->string('bank_account_number');
@@ -31,9 +32,6 @@ class CreatemembersTable extends Migration
             $table->string('photo');
             $table->string('visa_number');
             $table->string('type');
-         
-            $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('status');
           
             $table->integer('province_id')->unsigned();

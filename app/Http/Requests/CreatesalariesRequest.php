@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\commissions;
+use App\Models\salaries;
 
-class UpdatecommissionsRequest extends FormRequest
+class CreatesalariesRequest extends FormRequest
 {
 
     /**
@@ -25,6 +25,6 @@ class UpdatecommissionsRequest extends FormRequest
      */
     public function rules()
     {
-        return commissions::$rules;
+        return salaries::$rules;
     }
 }

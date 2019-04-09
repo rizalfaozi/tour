@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            List Paket
+            Salaries
         </h1>
    </section>
    <div class="content">
@@ -11,9 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($categories, ['route' => ['categories.update', $categories->id], 'method' => 'patch']) !!}
+                   {!! Form::model($salaries, ['route' => ['salaries.update', $salaries->id], 'method' => 'patch']) !!}
 
-                        @include('categories.fields')
+                        @include('salaries.fields')
 
                    {!! Form::close() !!}
                </div>

@@ -2,8 +2,8 @@
 
 @section('content')
     <section class="content-header">
-        <h1>
-            Agents
+        <h1  style="text-transform:capitalize; ">
+            {{ $type }}
         </h1>
    </section>
    <div class="content">
@@ -11,7 +11,7 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($agents, ['route' => ['agents.update', $agents->id], 'method' => 'patch']) !!}
+                   {!! Form::model($agents, ['url' => ['agents?type='.$type, $agents->id], 'method' => 'patch','enctype'=>'multipart/form-data']) !!}
 
                         @include('agents.fields')
 

@@ -27,8 +27,6 @@ Route::resource('villages', 'villagesController');
 
 Route::resource('roles', 'rolesController');
 
-Route::resource('commissions', 'commissionsController');
-
 Route::resource('districts', 'districtsController');
 
 Route::resource('subdistricts', 'subdistrictsController');
@@ -36,3 +34,11 @@ Route::resource('subdistricts', 'subdistrictsController');
 Route::resource('categories', 'categoriesController');
 
 Route::resource('agents', 'agentsController');
+
+Route::resource('salaries', 'salariesController');
+
+Route::resource('invoices', 'invoicesController');
+
+Route::post('kabupaten', 'membersController@kabupaten');
+Route::post('kecamatan', 'membersController@kecamatan');
+Route::post('kelurahan', 'membersController@kelurahan');

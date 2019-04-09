@@ -6,27 +6,29 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class categories
+ * Class salaries
  * @package App\Models
- * @version April 7, 2019, 8:41 am UTC
+ * @version April 8, 2019, 2:51 pm UTC
  *
- * @property string name
- * @property string price
+ * @property integer user_id
+ * @property string total
+ * @property string type
+ * @property integer status
  */
-class categories extends Model
+class salaries extends Model
 {
     use SoftDeletes;
 
-    public $table = 'categories';
+    public $table = 'salaries';
     
 
     protected $dates = ['deleted_at'];
 
 
     public $fillable = [
-        'name',
-        'price',
-        'departure_date',
+        'user_id',
+        'total',
+        'type',
         'status'
     ];
 
@@ -36,9 +38,9 @@ class categories extends Model
      * @var array
      */
     protected $casts = [
-        'name' => 'string',
-        'price' => 'string',
-        'departure_date'=> 'string',
+        'user_id' => 'integer',
+        'total' => 'string',
+        'type' => 'string',
         'status' => 'integer'
     ];
 
@@ -48,16 +50,11 @@ class categories extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required',
-        'price' => 'required',
-        'departure_date'=> 'required',
+        'user_id' => 'required',
+        'total' => 'required',
+        'type' => 'required',
         'status' => 'required'
     ];
-
-
-
-
-
 
     
 }

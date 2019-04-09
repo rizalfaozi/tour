@@ -25,7 +25,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string photo
  * @property string visa_number
  * @property string type
- * @property integer category_id
  * @property integer status
  * @property integer province_id
  * @property integer subdistrict_id
@@ -50,6 +49,7 @@ class members extends Model
         'alternative_phone',
         'address',
         'email',
+        'gender',
         'id_card',
         'passport_number',
         'bank_account_number',
@@ -79,6 +79,7 @@ class members extends Model
         'alternative_phone' => 'string',
         'address' => 'string',
         'email' => 'string',
+        'gender' => 'string',
         'id_card' => 'string',
         'passport_number' => 'string',
         'bank_account_number' => 'string',
@@ -104,6 +105,7 @@ class members extends Model
         'first_name' => 'required',
         'last_name' => 'required',
         'age' => 'required',
+        'gender' => 'required',
         'phone' => 'required',
         'id_card' => 'required',
         'category_id' => 'required',

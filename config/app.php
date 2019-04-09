@@ -182,6 +182,7 @@ return [
         \InfyOm\Generator\InfyOmGeneratorServiceProvider::class,
         \InfyOm\AdminLTETemplates\AdminLTETemplatesServiceProvider::class, 
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+        Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
         'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

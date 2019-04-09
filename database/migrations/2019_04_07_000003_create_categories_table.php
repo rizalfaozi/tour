@@ -17,6 +17,8 @@ class CreatecategoriesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('price');
+            $table->string('departure_date');
+            $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
         });

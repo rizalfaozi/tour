@@ -1,8 +1,10 @@
 <table class="table table-responsive" id="categories-table">
     <thead>
         <tr>
-            <th>Name</th>
-        <th>Price</th>
+            <th>Nama Paket</th>
+            <th>Harga</th>
+            <th>Tanggal Berangkat</th>
+            <th>Status</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
@@ -10,7 +12,13 @@
     @foreach($categories as $categories)
         <tr>
             <td>{!! $categories->name !!}</td>
-            <td>{!! $categories->price !!}</td>
+            <td>Rp {!! number_format($categories->price,2,',','.') !!}</td>
+            <td>{!! $categories->departure_date !!}</td>
+             <td>  @if($categories->status>0)
+               Aktif
+             @else
+                Non Aktif
+             @endif</td>
             <td>
                 {!! Form::open(['route' => ['categories.destroy', $categories->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

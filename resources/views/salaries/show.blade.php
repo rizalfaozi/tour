@@ -3,15 +3,15 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Commissions
+            Salaries
         </h1>
     </section>
     <div class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
-                    @include('commissions.show_fields')
-                    <a href="{!! route('commissions.index') !!}" class="btn btn-default">Back</a>
+                    @include('salaries.show_fields')
+                    <a href="{!! route('salaries.index') !!}" class="btn btn-default">Back</a>
                 </div>
             </div>
         </div>

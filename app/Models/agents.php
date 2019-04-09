@@ -67,14 +67,7 @@ class agents extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required',
-        'role_id' => 'required',
-        'password' => 'required',
-        'email' => 'required',
-        'phone' => 'required',
-        'gender' => 'required',
-        'type' => 'required',
-        'status' => 'required'
+        
     ];
 
     
