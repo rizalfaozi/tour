@@ -55,6 +55,12 @@ class salaries extends Model
         'type' => 'required',
         'status' => 'required'
     ];
-
+    
+    public function user()
+    {
+        return $this->belongsTo('App\User')->withDefault();
+    }
     
 }
+
+

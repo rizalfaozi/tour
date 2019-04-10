@@ -53,11 +53,10 @@ class members extends Model
         'id_card',
         'passport_number',
         'bank_account_number',
-        'departure_date',
+        // 'departure_date',
         'photo',
         'visa_number',
         'type',
-        'category_id',
         'status',
         'province_id',
         'district_id',
@@ -83,11 +82,10 @@ class members extends Model
         'id_card' => 'string',
         'passport_number' => 'string',
         'bank_account_number' => 'string',
-        'departure_date' => 'date',
+        // 'departure_date' => 'date',
         'photo' => 'string',
         'visa_number' => 'string',
         'type' => 'string',
-        'category_id' => 'integer',
         'status' => 'integer',
         'province_id' => 'integer',
         'district_id' => 'integer',
@@ -101,14 +99,12 @@ class members extends Model
      * @var array
      */
     public static $rules = [
-        'user_id' => 'required',
         'first_name' => 'required',
         'last_name' => 'required',
         'age' => 'required',
         'gender' => 'required',
         'phone' => 'required',
         'id_card' => 'required',
-        'category_id' => 'required',
         'status' => 'required'
     ];
 

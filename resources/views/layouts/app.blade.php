@@ -160,5 +160,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 
     @yield('scripts')
+    @include('layouts.datatables_js')
+    <script>
+    $(document).ready( function () {
+        $('#table').DataTable();
+    } );</script>
 </body>
 </html>

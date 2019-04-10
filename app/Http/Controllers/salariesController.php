@@ -7,6 +7,8 @@ use App\Http\Requests\UpdatesalariesRequest;
 use App\Repositories\salariesRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use App\models\salaries;
+use App\User;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -41,9 +43,12 @@ class salariesController extends AppBaseController
      *
      * @return Response
      */
+
     public function create()
     {
-        return view('salaries.create');
+        
+        $users = User::all();
+        return view('salaries.create')->with('users',$users);
     }
 
     /**

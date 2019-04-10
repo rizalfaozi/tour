@@ -9,7 +9,11 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\Models\members;
 use Response;
+use File;
+use Auth;
 use DB;
 
 
@@ -32,8 +36,12 @@ class membersController extends AppBaseController
     public function index(Request $request)
     {
         $this->membersRepository->pushCriteria(new RequestCriteria($request));
-        $members = $this->membersRepository->all();
-
+        // $members = $this->membersRepository->all();
+        if(Auth::user()->type == 'admin' ){
+            $members = members::orderBy('id','desc')->get();
+        }else{
+            $members = members::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
+        }
         return view('members.index')
             ->with('members', $members);
     }
@@ -58,7 +66,27 @@ class membersController extends AppBaseController
      */
     public function store(CreatemembersRequest $request)
     {
+
         $input = $request->all();
+
+        if($request->photo=='') 
+        {
+            $input['photo'] = '';      
+        }else{
+            $kode = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);    
+            $fileFormat = ".jpg";
+            $dir = "files/photo";
+            $fileName = $kode . time();
+            $fullPath = $dir."/".$fileName.$fileFormat;
+            File::makeDirectory($request->photo, 0777, true, true);
+
+            $img = Image::make($request->photo)->save($fullPath, 60);
+            $input['photo'] = $fullPath;             
+        }
+
+        $input['user_id'] = Auth::user()->id;  
+        $input['status'] = 1;  
+
 
         $members = $this->membersRepository->create($input);
 

@@ -119,6 +119,8 @@
 <!-- Status Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:') !!}
+    {{ Form::radio('status', 1, isset($members) ? $members->status == 1 : false) }} Yes<br>
+    {{ Form::radio('status', 0, isset($members) ? $members->status == 0 : true) }} No
     
 </div>
 
