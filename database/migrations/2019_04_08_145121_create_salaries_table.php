@@ -17,7 +17,8 @@ class CreatesalariesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('total');
-            $table->string('type');
+            $table->string('commission');
+            $table->string('count');
             $table->integer('status');
             $table->timestamps();
             $table->softDeletes();

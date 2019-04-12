@@ -1,15 +1,15 @@
 <table class="table table-responsive" id="villages-table">
     <thead>
         <tr>
-            <th>Subdistrict Id</th>
-        <th>Name</th>
+            <th>Kecamatan</th>
+        <th>Kelurahan</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($villages as $villages)
         <tr>
-            <td>{!! $villages->subdistrict_id !!}</td>
+            <td>{!! $villages->subdistrict->name !!}</td>
             <td>{!! $villages->name !!}</td>
             <td>
                 {!! Form::open(['route' => ['villages.destroy', $villages->id], 'method' => 'delete']) !!}

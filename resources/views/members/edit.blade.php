@@ -11,9 +11,10 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($member, ['route' => ['members.update', $member->id, 'files' => true], 'method' => 'patch']) !!}
+              
+                   {!! Form::model($members, ['url' => ['members', $members->id], 'method' => 'patch','enctype'=>'multipart/form-data']) !!}
 
-                        @include('members.fields')
+                        @include('members.fields_edit')
 
                    {!! Form::close() !!}
                </div>

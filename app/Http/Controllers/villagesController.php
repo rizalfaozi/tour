@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\subdistricts;
 
 class villagesController extends AppBaseController
 {
@@ -43,7 +44,8 @@ class villagesController extends AppBaseController
      */
     public function create()
     {
-        return view('villages.create');
+        $subdistricts = subdistricts::orderBy('id','desc')->get(); 
+        return view('villages.create')->with(['subdistricts'=>$subdistricts]);
     }
 
     /**
@@ -94,14 +96,14 @@ class villagesController extends AppBaseController
     public function edit($id)
     {
         $villages = $this->villagesRepository->findWithoutFail($id);
-
+        $subdistricts = subdistricts::orderBy('id','desc')->get();
         if (empty($villages)) {
             Flash::error('Villages not found');
 
             return redirect(route('villages.index'));
         }
 
-        return view('villages.edit')->with('villages', $villages);
+        return view('villages.edit')->with(['villages'=> $villages,'subdistricts'=>$subdistricts]);
     }
 
     /**

@@ -48,5 +48,8 @@ class districts extends Model
         'name' => 'required'
     ];
 
-    
+     public function province()
+    {
+        return $this->belongsTo('App\Models\provinces');
+    }
 }

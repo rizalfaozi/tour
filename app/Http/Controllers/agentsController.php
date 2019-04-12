@@ -77,11 +77,16 @@ class agentsController extends AppBaseController
             $input['photo'] = '';      
 
         }else{
-            $kode = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);    
-            $fileFormat = ".jpg";
-            $dir = "files/photo";
-            $fileName = $kode . time();
-            $fullPath = $dir."/".$fileName.$fileFormat;
+          
+          $date = date("Y-m-d");
+          $time = date("H:i:s");   
+          $fileFormat = ".jpg";
+          
+          $dates = explode('-',$date);
+          $times = explode(':',$time);
+          $fileName = $dates[0].$dates[1].$dates[2].$times[0].$times[1].$times[2];
+          $fullPath = "files/photo/".$fileName.$fileFormat;
+
             File::makeDirectory($request->photo, 0777, true, true);
 
             $img = Image::make($request->photo)->save($fullPath, 60);
@@ -110,17 +115,17 @@ class agentsController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
         $agents = $this->agentsRepository->findWithoutFail($id);
-
+        $type = $request->get('type');
         if (empty($agents)) {
             Flash::error('Agents not found');
 
             return redirect(route('agents.index'));
         }
 
-        return view('agents.show')->with('agents', $agents);
+        return view('agents.show')->with(['agents'=> $agents,'type'=>$type]);
     }
 
     /**
@@ -171,30 +176,32 @@ class agentsController extends AppBaseController
         $input['address'] = $request->address;
 
 
-         if($request->photo=='') 
+         if($agents->photo!='') 
         {
                     
-            $input['photo'] = $agents->photo;    
-
-        }else{
-
-            unlink($agents->photo);
-            $kode = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);    
-            $fileFormat = ".jpg";
-            $dir = "files/photo";
-            $fileName = $kode . time();
-            $fullPath = $dir."/".$fileName.$fileFormat;
-            File::makeDirectory($request->photo, 0777, true, true);
-
-            $img = Image::make($request->photo)->save($fullPath, 60);
-            $input['photo'] = $fullPath;
-             
-                     
+          unlink($agents->photo);
+           
         }
-        $input['status'] = $request->status;
-        $agents = $this->agentsRepository->update($input, $id);
+
+
+          $date = date("Y-m-d");
+          $time = date("H:i:s");   
+          $fileFormat = ".jpg";
+          
+          $dates = explode('-',$date);
+          $times = explode(':',$time);
+          $fileName = $dates[0].$dates[1].$dates[2].$times[0].$times[1].$times[2];
+          $fullPath = "files/photo/".$fileName.$fileFormat;
+
+          File::makeDirectory($request->photo, 0777, true, true);
+
+          $img = Image::make($request->photo)->save($fullPath, 60);
+          $input['photo'] = $fullPath;
+
+          $input['status'] = $request->status;
+          $agents = $this->agentsRepository->update($input, $id);
         
-        Flash::success('Agents updated successfully.');
+          Flash::success('Agents updated successfully.');
 
         return redirect(url('agents?type='.$agents->type));
     }
@@ -209,7 +216,11 @@ class agentsController extends AppBaseController
     public function destroy($id)
     {
         $agents = $this->agentsRepository->findWithoutFail($id);
-        unlink($agents->photo); 
+        if($agents->photo !="")
+        {
+               unlink($agents->photo);    
+        }    
+   
         if (empty($agents)) {
             Flash::error('Agents not found');
 

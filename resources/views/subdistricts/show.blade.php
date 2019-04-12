@@ -11,7 +11,7 @@
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
                     @include('subdistricts.show_fields')
-                    <a href="{!! route('subdistricts.index') !!}" class="btn btn-default">Back</a>
+                    <a href="{!! route('subdistricts.index') !!}" class="btn btn-default">Batal</a>
                 </div>
             </div>
         </div>

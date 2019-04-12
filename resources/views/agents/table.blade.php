@@ -17,7 +17,7 @@
     <tbody>
     @foreach($agents as $agents)
         <tr>
-            <td><img width="50" height="50" src="{!! $agents->photo !!}" /></td>
+            <td><img width="50"  src="{!! $agents->photo !!}" /></td>
             <td>{!! $agents->name !!}</td>
             <td>{!! $agents->email !!}</td>
             <td>{!! $agents->phone !!}</td>
@@ -33,7 +33,7 @@
                 {!! Form::open(['route' => ['agents.destroy', $agents->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('agents.show', [$agents->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a href="{!! route('agents.edit', [$agents->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="{!! url('agents/'.$agents->id.'/edit?type='.$type) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>
                     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
                 </div>
                 {!! Form::close() !!}

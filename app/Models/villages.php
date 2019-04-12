@@ -48,5 +48,8 @@ class villages extends Model
         'name' => 'required'
     ];
 
-    
+       public function subdistrict()
+    {
+        return $this->belongsTo('App\Models\subdistricts');
+    }
 }

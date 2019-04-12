@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Models\categories;
+use App\Models\members;
+
 
 class invoicesController extends AppBaseController
 {
@@ -43,7 +46,10 @@ class invoicesController extends AppBaseController
      */
     public function create()
     {
-        return view('invoices.create');
+        $categories = categories::select('id','name')->where('status','1')->orderBy('id','desc')->get();
+
+        $members = members::select('id','first_name','last_name')->orderBy('id','desc')->get();
+        return view('invoices.create')->with(['categories'=>$categories,'members'=> $members]);
     }
 
     /**
@@ -55,7 +61,13 @@ class invoicesController extends AppBaseController
      */
     public function store(CreateinvoicesRequest $request)
     {
-        $input = $request->all();
+        $input['member_id'] = $request->member_id;
+        $input['user_id'] = $request->user_id;
+        $input['category_id'] = $request->category_id;
+        $input['price'] = $request->price;
+        $input['total'] = $request->total;  
+        $input['type'] = $request->type; 
+        $input['status'] = $request->status; 
 
         $invoices = $this->invoicesRepository->create($input);
 
@@ -94,14 +106,16 @@ class invoicesController extends AppBaseController
     public function edit($id)
     {
         $invoices = $this->invoicesRepository->findWithoutFail($id);
+         $categories = categories::select('id','name')->where('status','1')->orderBy('id','desc')->get();
 
+        $members = members::select('id','first_name','last_name')->orderBy('id','desc')->get();
         if (empty($invoices)) {
             Flash::error('Invoices not found');
 
             return redirect(route('invoices.index'));
         }
 
-        return view('invoices.edit')->with('invoices', $invoices);
+        return view('invoices.edit')->with(['invoices'=> $invoices,'categories'=>$categories,'members'=>$members]);
     }
 
     /**
@@ -151,5 +165,15 @@ class invoicesController extends AppBaseController
         Flash::success('Invoices deleted successfully.');
 
         return redirect(route('invoices.index'));
+    }
+
+    public function paket(request $request){
+      $total = categories::where('id',$request->id)->first()->price;
+      return $total;
+    }
+
+    public function user(request $request){
+      $user = members::where('id',$request->id)->first()->user_id;
+      return $user;
     }
 }

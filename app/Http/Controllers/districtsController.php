@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\models\provinces;
 
 class districtsController extends AppBaseController
 {
@@ -43,7 +44,8 @@ class districtsController extends AppBaseController
      */
     public function create()
     {
-        return view('districts.create');
+        $provinces = provinces::orderBy('id','desc')->get();
+        return view('districts.create')->with(['provinces'=>$provinces]);
     }
 
     /**
@@ -74,14 +76,14 @@ class districtsController extends AppBaseController
     public function show($id)
     {
         $districts = $this->districtsRepository->findWithoutFail($id);
-
+        $provinces = provinces::orderBy('id','desc')->get();
         if (empty($districts)) {
             Flash::error('Districts not found');
 
             return redirect(route('districts.index'));
         }
 
-        return view('districts.show')->with('districts', $districts);
+        return view('districts.show')->with(['districts'=> $districts,'provinces'=>$provinces]);
     }
 
     /**
@@ -94,14 +96,14 @@ class districtsController extends AppBaseController
     public function edit($id)
     {
         $districts = $this->districtsRepository->findWithoutFail($id);
-
+        $provinces = provinces::orderBy('id','desc')->get();
         if (empty($districts)) {
             Flash::error('Districts not found');
 
             return redirect(route('districts.index'));
         }
 
-        return view('districts.edit')->with('districts', $districts);
+        return view('districts.edit')->with(['districts'=> $districts,'provinces'=>$provinces]);
     }
 
     /**

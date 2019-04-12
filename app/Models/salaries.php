@@ -28,7 +28,8 @@ class salaries extends Model
     public $fillable = [
         'user_id',
         'total',
-        'type',
+        'commission',
+        'count',
         'status'
     ];
 
@@ -40,7 +41,8 @@ class salaries extends Model
     protected $casts = [
         'user_id' => 'integer',
         'total' => 'string',
-        'type' => 'string',
+        'commission'=>'string',
+        'count' => 'string',
         'status' => 'integer'
     ];
 
@@ -52,7 +54,7 @@ class salaries extends Model
     public static $rules = [
         'user_id' => 'required',
         'total' => 'required',
-        'type' => 'required',
+        'commission'=>'required',
         'status' => 'required'
     ];
     

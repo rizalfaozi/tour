@@ -2,9 +2,9 @@
 
 @section('content')
     <section class="content-header">
-        <h1 class="pull-left">Districts</h1>
+        <h1 class="pull-left">Kabupaten</h1>
         <h1 class="pull-right">
-           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('districts.create') !!}">Add New</a>
+           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('districts.create') !!}">Tambah</a>
         </h1>
     </section>
     <div class="content">

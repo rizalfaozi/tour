@@ -15,9 +15,9 @@
             <td>Rp {!! number_format($categories->price,2,',','.') !!}</td>
             <td>{!! $categories->departure_date !!}</td>
              <td>  @if($categories->status>0)
-               Aktif
+               Publish
              @else
-                Non Aktif
+                Draft
              @endif</td>
             <td>
                 {!! Form::open(['route' => ['categories.destroy', $categories->id], 'method' => 'delete']) !!}

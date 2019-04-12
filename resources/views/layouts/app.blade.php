@@ -164,6 +164,9 @@
     <script>
     $(document).ready( function () {
         $('#table').DataTable();
+        $('#selectID').select2({
+  selectOnClose: true
+});
     } );</script>
 </body>
 </html>

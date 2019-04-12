@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Member
+            Jama'ah
         </h1>
     </section>
     <div class="content">
@@ -12,9 +12,10 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'members.store', 'files' => true]) !!}
+                   
+                    {!! Form::open(['route' => 'members.store','enctype'=>'multipart/form-data']) !!}
 
-                        @include('members.fields')
+                        @include('members.fields_create')
 
                     {!! Form::close() !!}
                 </div>

@@ -1,9 +1,10 @@
 <table class="table table-responsive" id="salaries-table">
     <thead>
         <tr>
-            <th>User Id</th>
-        <th>Total</th>
-        <th>Type</th>
+        <th>Agen / Perwakilan</th>
+        <th>Total Gaji</th>
+        <th>Komisi</th>
+        <th>Total Closing</th>
         <th>Status</th>
             <th colspan="3">Action</th>
         </tr>
@@ -11,10 +12,11 @@
     <tbody>
     @foreach($salaries as $salaries)
         <tr>
-            <td>{!! $salaries->user_id !!}</td>
-            <td>{!! $salaries->total !!}</td>
-            <td>{!! $salaries->type !!}</td>
-            <td>{!! $salaries->status !!}</td>
+            <td>{!! $salaries->user->name !!}</td>
+            <td>Rp {!! number_format($salaries->total,2,',','.')   !!}</td>
+            <td>Rp {!! number_format($salaries->commission,2,',','.')   !!}</td>
+            <td>{!! $salaries->count !!} Jama'ah</td>
+            <td>@if($salaries->status ==0) Pending @else Sukses @endif</td>
             <td>
                 {!! Form::open(['route' => ['salaries.destroy', $salaries->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

@@ -17,7 +17,8 @@
   </a>
   <ul class="treeview-menu">
 
- 
+     <li class="{{ Request::is('invoices*') ? 'active' : '' }}">
+    <a href="{!! route('invoices.index') !!}"><i class="fa fa-circle-o"></i><span>Invoice Jama'ah</span></a></li>
 
     <li class="{{ Request::is('salaries*') ? 'active' : '' }}">
     <a href="{!! route('salaries.index') !!}"><i class="fa fa-circle-o"></i><span>Gaji Agen</span></a>
@@ -25,9 +26,7 @@
  
    
 
-    <li class="{{ Request::is('roles*') ? 'active' : '' }}">
-      <a href="{!! route('roles.index') !!}"><i class="fa fa-circle-o"></i><span>Riwayat</span></a>
-    </li>
+    
   </ul>
 
 <li class="treeview">

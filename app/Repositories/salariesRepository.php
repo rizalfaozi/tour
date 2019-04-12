@@ -24,7 +24,7 @@ class salariesRepository extends BaseRepository
         'total',
         'commission',
         'count',
-        'type',
+        
         'status'
     ];
 

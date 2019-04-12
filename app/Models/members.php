@@ -53,7 +53,6 @@ class members extends Model
         'id_card',
         'passport_number',
         'bank_account_number',
-        // 'departure_date',
         'photo',
         'visa_number',
         'type',
@@ -82,7 +81,6 @@ class members extends Model
         'id_card' => 'string',
         'passport_number' => 'string',
         'bank_account_number' => 'string',
-        // 'departure_date' => 'date',
         'photo' => 'string',
         'visa_number' => 'string',
         'type' => 'string',
@@ -108,5 +106,8 @@ class members extends Model
         'status' => 'required'
     ];
 
-    
+     public function user()
+    {
+        return $this->belongsTo('App\user');
+    }
 }

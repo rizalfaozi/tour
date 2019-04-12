@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -29,7 +31,9 @@ class invoices extends Model
     public $fillable = [
         'category_id',
         'member_id',
+        'user_id',
         'price',
+        'total',
         'type',
         'status'
     ];
@@ -42,7 +46,9 @@ class invoices extends Model
     protected $casts = [
         'category_id' => 'integer',
         'member_id' => 'integer',
+         'user_id' => 'integer',
         'price' => 'string',
+        'total' => 'string',
         'type' => 'string',
         'status' => 'integer'
     ];
@@ -54,11 +60,30 @@ class invoices extends Model
      */
     public static $rules = [
         'category_id' => 'required',
-        'member_id' => 'reqired',
+        'member_id' => 'required',
+        'user_id' => 'required',
         'price' => 'required',
+        'total' => 'required',
         'type' => 'required',
         'status' => 'required'
     ];
 
+
+     public function category()
+    {
+        return $this->belongsTo('App\Models\categories');
+    }
+
+
     
+
+     public function member()
+    {
+        return $this->belongsTo('App\Models\members');
+    }
+
+     public function user()
+    {
+        return $this->belongsTo('App\User')->withDefault();
+    }
 }

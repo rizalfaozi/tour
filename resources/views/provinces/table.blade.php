@@ -1,7 +1,7 @@
 <table class="table table-responsive" id="provinces-table">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Nama Provinsi</th>
             <th colspan="3">Action</th>
         </tr>
     </thead>

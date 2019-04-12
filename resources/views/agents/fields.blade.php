@@ -31,13 +31,14 @@
     {!! Form::file('photo', null, ['class' => 'form-control']) !!}
 </div>
 
-<?php if($agents->photo !=""){?>
+<?php if(Request::segment(2) !="create"){?>
+<?php if(isset($agents) ? $agents->photo != '' : true){?>
 <div class="form-group col-sm-6">
    
-   <img width="100" height="100" src="{{ '/'.$agents->photo }}">
+   <img width="30%" src="{{ isset($agents) ? '/'.$agents->photo : true  }}">
 </div>
 
-<?php } ?>    
+<?php } }?>    
 
 <!-- Address Field -->
 <div class="form-group col-sm-12 col-lg-12">
@@ -63,6 +64,6 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('agents.index') !!}" class="btn btn-default">Cancel</a>
+    {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+    <a href="{!! route('agents.index') !!}" class="btn btn-default">Batal</a>
 </div>

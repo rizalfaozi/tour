@@ -28,7 +28,7 @@ class CreatemembersTable extends Migration
             $table->string('id_card'); // ktp
             $table->string('passport_number'); //passport
             $table->string('bank_account_number');
-            $table->date('departure_date');
+           
             $table->string('photo');
             $table->string('visa_number');
             $table->string('type');

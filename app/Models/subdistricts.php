@@ -47,6 +47,9 @@ class subdistricts extends Model
         'district_id' => 'required',
         'name' => 'required'
     ];
-
-    
+ 
+       public function district()
+    {
+        return $this->belongsTo('App\Models\districts');
+    }
 }

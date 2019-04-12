@@ -11,6 +11,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Models\members;
+use App\Criteria\membersCriteria;
 use Response;
 use File;
 use Auth;
@@ -35,13 +36,9 @@ class membersController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->membersRepository->pushCriteria(new RequestCriteria($request));
-        // $members = $this->membersRepository->all();
-        if(Auth::user()->type == 'admin' ){
-            $members = members::orderBy('id','desc')->get();
-        }else{
-            $members = members::where('user_id',Auth::user()->id)->orderBy('id','desc')->get();
-        }
+        $this->membersRepository->pushCriteria(new membersCriteria($request));
+        $members = $this->membersRepository->all();
+       
         return view('members.index')
             ->with('members', $members);
     }
@@ -53,6 +50,7 @@ class membersController extends AppBaseController
      */
     public function create()
     {
+
         $provinsi = DB::table('provinces')->get();
         return view('members.create')->with('provinsi', $provinsi);
     }
@@ -73,11 +71,16 @@ class membersController extends AppBaseController
         {
             $input['photo'] = '';      
         }else{
-            $kode = substr(str_shuffle(str_repeat("0123456789abcdefghijklmnopqrstuvwxyz", 6)), 0, 6);    
-            $fileFormat = ".jpg";
-            $dir = "files/photo";
-            $fileName = $kode . time();
-            $fullPath = $dir."/".$fileName.$fileFormat;
+           
+          $date = date("Y-m-d");
+          $time = date("H:i:s");   
+          $fileFormat = ".jpg";
+          
+          $dates = explode('-',$date);
+          $times = explode(':',$time);
+          $fileName = $dates[0].$dates[1].$dates[2].$times[0].$times[1].$times[2];
+          $fullPath = "files/photo/".$fileName.$fileFormat;
+
             File::makeDirectory($request->photo, 0777, true, true);
 
             $img = Image::make($request->photo)->save($fullPath, 60);
@@ -85,8 +88,9 @@ class membersController extends AppBaseController
         }
 
         $input['user_id'] = Auth::user()->id;  
+        $input['type'] = 'jamaah';  
         $input['status'] = 1;  
-
+   
 
         $members = $this->membersRepository->create($input);
 
@@ -125,14 +129,14 @@ class membersController extends AppBaseController
     public function edit($id)
     {
         $members = $this->membersRepository->findWithoutFail($id);
-
+          $provinsi = DB::table('provinces')->get();
         if (empty($members)) {
             Flash::error('Members not found');
 
             return redirect(route('members.index'));
         }
 
-        return view('members.edit')->with('members', $members);
+        return view('members.edit')->with(['members'=>$members,'provinsi'=>$provinsi]);
     }
 
     /**
@@ -153,7 +157,49 @@ class membersController extends AppBaseController
             return redirect(route('members.index'));
         }
 
-        $members = $this->membersRepository->update($request->all(), $id);
+         $input['first_name'] = $request->first_name;
+         $input['last_name'] = $request->last_name;
+         $input['age'] = $request->age;
+         $input['phone'] = $request->phone;
+         $input['alternative_phone'] = $request->alternative_phone;
+         $input['address'] = $request->address;
+         $input['id_card'] = $request->id_card;
+         $input['bank_account_number'] = $request->bank_account_number;
+         $input['passport_number'] = $request->passport_number;
+         $input['visa_number'] = $request->visa_number;
+         $input['gender'] = $request->gender;
+         $input['province_id'] = $request->province_id;
+         $input['district_id'] = $request->district_id;
+         $input['subdistrict_id'] = $request->subdistrict_id;
+         $input['village_id'] = $request->village_id;
+
+         if($members->photo !='') 
+        {
+                    
+            unlink($members->photo);   
+
+        }
+
+          
+            
+          $date = date("Y-m-d");
+          $time = date("H:i:s");   
+          $fileFormat = ".jpg";
+          
+          $dates = explode('-',$date);
+          $times = explode(':',$time);
+          $fileName = $dates[0].$dates[1].$dates[2].$times[0].$times[1].$times[2];
+          $fullPath = "files/photo/".$fileName.$fileFormat;
+
+            File::makeDirectory($request->photo, 0777, true, true);
+
+            $img = Image::make($request->photo)->save($fullPath, 60);
+            $input['photo'] = $fullPath;
+             
+                     
+        
+         $input['status'] = $request->status;
+        $members = $this->membersRepository->update($input, $id);
 
         Flash::success('Members updated successfully.');
 
@@ -170,7 +216,11 @@ class membersController extends AppBaseController
     public function destroy($id)
     {
         $members = $this->membersRepository->findWithoutFail($id);
-
+        if($members->photo !="")
+        {
+           unlink($members->photo);  
+        }    
+        
         if (empty($members)) {
             Flash::error('Members not found');
 
@@ -206,5 +256,7 @@ class membersController extends AppBaseController
        $kelurahan = DB::table('villages')->where('subdistrict_id',$request->id)->get();
        return $kelurahan;
 
-    }
+       }
+
+
 }

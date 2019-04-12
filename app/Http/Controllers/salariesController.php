@@ -9,6 +9,8 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use App\models\salaries;
 use App\User;
+use App\Models\members;
+use App\Models\invoices;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -47,8 +49,8 @@ class salariesController extends AppBaseController
     public function create()
     {
         
-        $users = User::all();
-        return view('salaries.create')->with('users',$users);
+        $agents = User::select('id','name','type')->where('type','!=','admin')->OrderBy('id','desc')->get();
+        return view('salaries.create')->with('agents',$agents);
     }
 
     /**
@@ -99,14 +101,14 @@ class salariesController extends AppBaseController
     public function edit($id)
     {
         $salaries = $this->salariesRepository->findWithoutFail($id);
-
+        $agents = User::select('id','name','type')->where('type','!=','admin')->OrderBy('id','desc')->get();
         if (empty($salaries)) {
             Flash::error('Salaries not found');
 
             return redirect(route('salaries.index'));
         }
 
-        return view('salaries.edit')->with('salaries', $salaries);
+        return view('salaries.edit')->with(['salaries'=>$salaries,'agents'=>$agents]);
     }
 
     /**
@@ -156,5 +158,14 @@ class salariesController extends AppBaseController
         Flash::success('Salaries deleted successfully.');
 
         return redirect(route('salaries.index'));
+    }
+
+
+
+    public function closing(Request $request)
+    {
+
+      $closing = invoices::where(['user_id'=>$request->id,'type'=>'lunas'])->count();
+      return $closing;
     }
 }

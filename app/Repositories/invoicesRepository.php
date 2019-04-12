@@ -22,7 +22,9 @@ class invoicesRepository extends BaseRepository
     protected $fieldSearchable = [
         'category_id',
         'member_id',
+        'user_id',
         'price',
+        'total',
         'type',
         'status'
     ];

@@ -49,6 +49,52 @@
     {!! Form::text('id_card', null, ['class' => 'form-control']) !!}
 </div>
 
+
+
+<!-- Category Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('gender', 'Jenis Kelamin:') !!}<br>
+     {{ Form::radio('gender', 'pria', isset($members) ? $members->gender == 'pria' : false) }} Pria<br>
+    {{ Form::radio('gender', 'wanita', isset($members) ? $members->gender == 'wanita' : true) }} Wanita
+</div>
+
+
+
+<!-- Province Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('province_id', 'Provinsi:') !!}
+   <select class="form-control" name="province_id" id="province_id">
+         <option value="0">Pilih Provinsi</option>
+         @foreach($provinsi as $row)
+         
+                <option value="{{ $row->id }}" >{{ $row->name }}</option>
+         
+         @endforeach
+    </select>
+</div>
+
+<!-- District Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('district_id', 'Kabupaten:') !!}
+    <select class="form-control" name="district_id" id="district_id"></select>
+ 
+</div>
+
+<!-- Subdistrict Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('subdistrict_id', 'Kecamatan:') !!}
+     <select class="form-control" name="subdistrict_id" id="subdistrict_id"></select>
+    
+   
+</div>
+
+<!-- Village Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('village_id', 'Kelurahan:') !!}
+     <select class="form-control" name="village_id" id="village_id"></select>
+     
+</div>
+
 <!-- Bank Account Number Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('bank_account_number', 'No Rekening:') !!}
@@ -69,82 +115,48 @@
 </div>
 
 
-
-<!-- Category Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('gender', 'Jenis Kelamin:') !!}<br>
-     {{ Form::radio('gender', 'pria', isset($members) ? $members->gender == 'pria' : false) }} Pria<br>
-    {{ Form::radio('gender', 'wanita', isset($members) ? $members->gender == 'wanita' : true) }} Wanita
-</div>
-
-
-
-<!-- Province Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('province_id', 'Provinsi:') !!}
-   <select class="form-control" name="province_id" id="provinsi">
-         <option value="0">Pilih Provinsi</option>
-         @foreach($provinsi as $row)
-               <option value="{{ $row->id }}">{{ $row->name }}</option>
-         @endforeach
-    </select>
-</div>
-
-<!-- District Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('district_id', 'Kabupaten:') !!}
-    <select class="form-control" name="district_id" id="kabupaten"></select>
-</div>
-
-<!-- Subdistrict Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('subdistrict_id', 'Kecamatan:') !!}
-     <select class="form-control" name="subdistrict_id" id="kecamatan"></select>
-</div>
-
-<!-- Village Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('village_id', 'Kelurahan:') !!}
-     <select class="form-control" name="village_id" id="kelurahan"></select>
-</div>
-
-
 <!-- Photo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('photo', 'Photo:') !!}
     {!! Form::file('photo', null, ['class' => 'form-control']) !!}
 </div>
 
-
 <!-- Status Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('status', 'Status:') !!}
+    {!! Form::label('status', 'Status:') !!}<br>
     {{ Form::radio('status', 1, isset($members) ? $members->status == 1 : false) }} Yes<br>
     {{ Form::radio('status', 0, isset($members) ? $members->status == 0 : true) }} No
     
 </div>
 
+
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('members.index') !!}" class="btn btn-default">Cancel</a>
+    {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+    <a href="{!! route('members.index') !!}" class="btn btn-default">Batal</a>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function(){ 
     
-    $('#provinsi').on('change', function() {
-     kabupaten(this.value)
+    let provinsi = $('#province_id').val();
+    $('#province_id').on('change', function() {
+     kabupaten(this.value);
     });
 
-    $('#kabupaten').on('change', function() {
-     kecamatan(this.value)
+    $('#district_id').on('change', function() {
+     kecamatan(this.value);
     });
 
-    $('#kecamatan').on('change', function() {
-     kelurahan(this.value)
+    $('#subdistrict_id').on('change', function() {
+     kelurahan(this.value);
     });
+
+    
+       
+      
 });
 
   function kabupaten(id)
@@ -165,13 +177,12 @@
          {
              select  += "<option value='"+ respons[a]['id'] +"'>";
              select  += ""+ respons[a]['name'] +"";
-          // select  += '<option value="'+ respons[a]['id'] +'">'+ respons[a]['name'] +'</option';
               select  += "</option>";
-             // kecamatan(respons[a]['id']);
+             
 
          }   
            
-        $('#kabupaten').html(select);
+        $('#district_id').html(select);
 
       },
     error: function (respons) {
@@ -182,6 +193,8 @@
 
   }
 
+
+  
   function kecamatan(id)
   {
    
@@ -206,7 +219,7 @@
              // kelurahan(respons[a]['id']);
          }   
           
-        $('#kecamatan').html(select);
+        $('#subdistrict_id').html(select);
 
       },
     error: function (respons) {
@@ -215,6 +228,11 @@
       }
   });
   }
+
+
+  
+
+  
 
 
   function kelurahan(id)
@@ -231,17 +249,16 @@
 
         select = "";
          jmlData = respons.length;
-         // select += '<option value="0">Pilih Kabupaten</option';
+
          for(a = 0; a < jmlData; a++)
          {
              select  += "<option value='"+ respons[a]['id'] +"'>";
              select  += ""+ respons[a]['name'] +"";
-          // select  += '<option value="'+ respons[a]['id'] +'">'+ respons[a]['name'] +'</option';
-              select  += "</option>";
+             select  += "</option>";
 
          }   
            //
-        $('#kelurahan').html(select);
+        $('#village_id').html(select);
 
       },
     error: function (respons) {
@@ -251,5 +268,7 @@
   });
   }
 
+
+ 
 </script>
 

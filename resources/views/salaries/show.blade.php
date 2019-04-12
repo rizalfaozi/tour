@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Salaries
+            Gaji Agen / Perwakilan
         </h1>
     </section>
     <div class="content">

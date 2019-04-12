@@ -19,12 +19,12 @@
 <!-- Price Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('status', 'Status:') !!}<br>
-    {{ Form::radio('status', 1, isset($categories) ? $categories->status == 1 : false) }} Yes<br>
-    {{ Form::radio('status', 0, isset($categories) ? $categories->status == 0 : true) }} No
+    {{ Form::radio('status', 1, isset($categories) ? $categories->status == 1 : false) }} Publish<br>
+    {{ Form::radio('status', 0, isset($categories) ? $categories->status == 0 : true) }} Draft
 </div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('categories.index') !!}" class="btn btn-default">Cancel</a>
+    {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
+    <a href="{!! route('categories.index') !!}" class="btn btn-default">Batal</a>
 </div>

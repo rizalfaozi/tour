@@ -42,3 +42,7 @@ Route::resource('invoices', 'invoicesController');
 Route::post('kabupaten', 'membersController@kabupaten');
 Route::post('kecamatan', 'membersController@kecamatan');
 Route::post('kelurahan', 'membersController@kelurahan');
+Route::post('paket', 'invoicesController@paket');
+
+Route::post('closing', 'salariesController@closing');
+Route::post('user', 'invoicesController@user');
