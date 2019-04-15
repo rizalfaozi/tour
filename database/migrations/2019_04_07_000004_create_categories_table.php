@@ -16,8 +16,13 @@ class CreatecategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('type');
             $table->string('price');
-            $table->string('departure_date');
+            $table->date('departure_date');
+            $table->string('flight');
+            $table->string('hotel');
+            $table->text('description');
+            $table->integer('quota');
             $table->integer('status');
             $table->timestamps();
             $table->softDeletes();

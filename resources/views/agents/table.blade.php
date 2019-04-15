@@ -1,14 +1,14 @@
-<table class="table table-responsive" id="agents-table">
+<table id="example" class="table  table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
         <th>Photo</th>
-        <th>Name</th>
-       
-      
+        <th>Nama Kantor</th>
+        <th>Nama Lengkap</th>
         <th>Email</th>
-        <th>Phone</th>
-        <th>Address</th>
-        <th>Gender</th>
+        <th>Telp</th>
+         <th>Jenis Kelamin</th>
+        <th>Bank</th>
+        <th>No Rekening</th>
        
         <th>Status</th>
             <th>Action</th>
@@ -17,12 +17,17 @@
     <tbody>
     @foreach($agents as $agents)
         <tr>
-            <td><img width="50"  src="{!! $agents->photo !!}" /></td>
+            <td><img width="50" height="50"  src="@if(isset($agents) ? $agents->photo != '' : false){!! $agents->photo !!}@else {{ asset('files/photo/default.png') }}  @endif" />
+            </td>
+            <td>{!! $agents->office_name !!}</td>
             <td>{!! $agents->name !!}</td>
             <td>{!! $agents->email !!}</td>
             <td>{!! $agents->phone !!}</td>
-            <td>{!! $agents->address !!}</td>
-            <td>{!! $agents->gender !!}</td>
+             <td>{!! $agents->gender !!}</td>
+            <td>{!! $agents->bank !!}</td>
+            <td>{!! $agents->account_number !!}</td>
+          
+           
             
             <td> @if($agents->status>0)
                Aktif
@@ -42,3 +47,11 @@
     @endforeach
     </tbody>
 </table>
+<style type="text/css">
+    #example_paginate .pagination{
+         margin: 0px 0;
+         position: relative;
+         top:-6px;
+        float: right;
+    }   
+</style>

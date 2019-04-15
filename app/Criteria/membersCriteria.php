@@ -33,9 +33,9 @@ class membersCriteria implements CriteriaInterface
         $user = Auth::user(); 
         if($user->role_id !="3")
         {
-          $model = $model->orderBy('id','desc');
+          $model = $model->where(['type'=>'jamaah'])->orderBy('id','desc');
         }else{    
-           $model = $model->where('user_id', $user->id)->orderBy('id','desc'); 
+           $model = $model->where(['user_id'=> $user->id,'type'=>'jamaah'])->orderBy('id','desc'); 
         }  
         return $model;
     }

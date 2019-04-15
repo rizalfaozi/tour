@@ -12,7 +12,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "tymon/jwt-auth": "^0.5.12",
-        "intervention/image": "dev-master"
+        "intervention/image": "dev-master",
+        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

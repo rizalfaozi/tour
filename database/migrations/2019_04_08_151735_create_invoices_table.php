@@ -15,6 +15,7 @@ class CreateinvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id'); 
+            $table->string('invoice_number');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
 
@@ -24,6 +25,10 @@ class CreateinvoicesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 
             $table->string('price');
+            $table->string('bank');
+            $table->string('account_number');
+            $table->string('account_name');
+            $table->string('payment');
             $table->string('total');
             $table->string('type');
             $table->integer('status');

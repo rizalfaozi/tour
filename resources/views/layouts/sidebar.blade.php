@@ -6,8 +6,8 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="http://infyom.com/images/logo/blue_logo_150x150.jpg" class="img-circle"
-                     alt="User Image"/>
+                <img width="50" height="50" src="@if(Auth::user()->photo !='') {!! Auth::user()->photo !!}@else {{ asset('files/photo/default.png') }}  @endif"
+                     alt="User Image" class="img-circle" />
             </div>
             <div class="pull-left info">
                 @if (Auth::guest())
@@ -33,7 +33,7 @@
         <!-- Sidebar Menu -->
 
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
+            
             @include('layouts.menu')
         </ul>
         <!-- /.sidebar-menu -->

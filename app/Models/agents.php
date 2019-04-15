@@ -32,12 +32,18 @@ class agents extends Model
 
     public $fillable = [
         'name',
+        'office_name',
         'role_id',
         'password',
         'email',
         'phone',
         'photo',
         'address',
+        'bank',
+        'account_number',
+        'account_name',
+        'province_id',
+        'district_id',
         'gender',
         'type',
         'status'
@@ -50,12 +56,18 @@ class agents extends Model
      */
     protected $casts = [
         'name' => 'string',
+        'office_name'=>'string',
         'role_id' => 'integer',
         'password' => 'string',
         'email' => 'string',
         'phone' => 'string',
         'photo' => 'string',
         'address' => 'string',
+        'bank' => 'string',
+        'account_number' => 'string',
+        'account_name' => 'string',
+        'province_id'=> 'integer',
+        'district_id' => 'integer',
         'gender' => 'string',
         'type' => 'string',
         'status' => 'integer'

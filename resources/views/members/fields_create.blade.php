@@ -95,11 +95,7 @@
      
 </div>
 
-<!-- Bank Account Number Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('bank_account_number', 'No Rekening:') !!}
-    {!! Form::text('bank_account_number', null, ['class' => 'form-control']) !!}
-</div>
+
 
 <!-- Passport Number Field -->
 <div class="form-group col-sm-6">

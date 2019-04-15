@@ -31,7 +31,6 @@ class membersRepository extends BaseRepository
         'gender',
         'id_card',
         'passport_number',
-        'bank_account_number',
         'departure_date',
         'photo',
         'visa_number',

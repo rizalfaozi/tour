@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Gaji Agen / Perwakilan
+            Gaji Agen / Kordinator
         </h1>
    </section>
    <div class="content">

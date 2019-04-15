@@ -27,7 +27,7 @@ class CreatemembersTable extends Migration
             $table->string('gender');
             $table->string('id_card'); // ktp
             $table->string('passport_number'); //passport
-            $table->string('bank_account_number');
+          
            
             $table->string('photo');
             $table->string('visa_number');
@@ -43,8 +43,8 @@ class CreatemembersTable extends Migration
             $table->integer('subdistrict_id')->unsigned();
             $table->foreign('subdistrict_id')->references('id')->on('subdistricts')->onUpdate('cascade')->onDelete('cascade');
 
-            $table->integer('village_id')->unsigned();
-            $table->foreign('village_id')->references('id')->on('villages')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('village_id');
+           
 
             $table->timestamps();
             $table->softDeletes();

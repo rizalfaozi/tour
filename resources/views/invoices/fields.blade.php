@@ -1,3 +1,12 @@
+<!-- Invoice Number Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('invoice_number', 'Kode Invoice') !!}
+    {!! Form::text('invoice_grup', $invoice_number, ['class' => 'form-control','disabled'=>'disabled']) !!} 
+  
+    {!! Form::hidden('invoice_number', $invoice_number, ['class' => 'form-control']) !!} 
+  
+</div>
+
 <!-- Member Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label("member_id", "Jama'ah:") !!}
@@ -17,7 +26,7 @@
 
 
    
-<input type="hidden" name="user_id" id="user_id" class="form-control">
+<input type="hidden" name="user_id" id="user_id" class="form-control" >
 
 <!-- Category Id Field -->
 <div class="form-group col-sm-6">
@@ -39,9 +48,38 @@
 <!-- Price Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('total', 'Total pembayaran Rp:') !!}
-    <input type="text" name="total" id="total" class="form-control" >
-
+    <input type="text" name="total" id="total_group" class="form-control" disabled>
+    <input type="hidden" name="total" id="total" class="form-control" >
   
+</div>
+
+<!-- Payment Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('payment', 'Tipe Pembayaran') !!}
+      {!! Form::select('payment',  [''=>'Pilih Tipe Pembayaran','cash'=>'Cash','transfer'=>'Transfer'],null, ['class' => 'form-control']) !!}
+</div>
+
+<div id="bankid">
+<!-- Bank Field -->
+<div  class="form-group col-sm-6">
+    {!! Form::label('bank', 'Bank') !!}
+      {!! Form::select('bank',  ['0'=>'Pilih Bank','mandiri'=>'Mandiri','bca'=>'BCA','bri'=>'BRI','bni'=>'BNI'],null, ['class' => 'form-control']) !!}
+
+</div>
+
+<!-- Account Number Field -->
+<div   class="form-group col-sm-6">
+    {!! Form::label('account_number', 'No Rekening') !!}
+    {!! Form::text('account_number', null, ['class' => 'form-control']) !!}  
+</div>
+
+<!-- Account Number Field -->
+<div   class="form-group col-sm-6">
+    {!! Form::label('account_name', 'Atas Nama') !!}
+    {!! Form::text('account_name', null, ['class' => 'form-control']) !!}  
+</div>
+
+
 </div>
 
 <!-- Price Field -->
@@ -77,9 +115,9 @@
       let category_id = $('#paket_id').val();
        let user_id = $('.user_id').val();
     $('#paket_id').on('change', function() {
-      if(category_id !="")
+      if(category_id !="0")
       {
-        paket_update(this.value);
+         paket_update(this.value);
 
       }else{  
          paket(this.value);
@@ -88,20 +126,31 @@
     });
 
 
+     $('#payment').on('change', function() {
+         if(this.value =="cash")
+         {
+            $("#bankid").hide();
+         }else{
+              $("#bankid").show();
+         } 
+    
+      });
+
+
     $('.user_id').on('change', function() {
     
          if(user_id !="")
-      {
-        user_update(this.value);
+         {
+           user_update(this.value);
 
-      }else{  
-         user(this.value);
-      } 
+         }else{  
+           user(this.value);
+        } 
      
     });
    
 
-    if(category_id !="")
+    if(category_id !="0")
     {
        paket_update(category_id);
 
@@ -134,7 +183,7 @@
       
       },
     error: function (respons) {
-      alert("Error paket");
+      //alert("Error paket");
         
       }
   });
@@ -155,10 +204,11 @@ function paket(id)
 
        
         $('#total').val(respons);
-      
+        $('#total_group').val(respons);
+         
       },
     error: function (respons) {
-      alert("Error paket");
+      //alert("Error paket");
         
       }
   });
@@ -178,10 +228,10 @@ let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
        
         $('#total').val(respons);
-      
+        $('#total_group').val(respons);
       },
     error: function (respons) {
-      alert("Error paket");
+      //alert("Error paket");
         
       }
   });
@@ -205,7 +255,7 @@ function user_update(id)
       
       },
     error: function (respons) {
-      alert("Error paket");
+      //alert("Error paket");
         
       }
   });

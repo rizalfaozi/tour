@@ -17,11 +17,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::group(['middleware' => ['roles:admin']], function () {
+
+Route::resource('provinces', 'provincesController');
+
+});
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('members', 'membersController');
 
-Route::resource('provinces', 'provincesController');
+
 
 Route::resource('villages', 'villagesController');
 
@@ -46,3 +53,15 @@ Route::post('paket', 'invoicesController@paket');
 
 Route::post('closing', 'salariesController@closing');
 Route::post('user', 'invoicesController@user');
+Route::get('withdraw', 'salariesController@withdraw');
+Route::get('verifikasi/{user_id}/{id}', 'salariesController@verifikasi');
+Route::resource('roleusers', 'roleusersController');
+
+Route::resource('histories', 'historiesController');
+Route::get('alumnus', 'schedulesController@alumnus');
+Route::get('pindah/alumni/{member_id}', 'schedulesController@pindah_alumni');
+Route::get('pindah/jamaah/{member_id}', 'schedulesController@pindah_jamaah');
+Route::post('reqinvoices', 'schedulesController@reqinvoices');
+Route::resource('schedules', 'schedulesController');
+
+Route::resource('advertisements', 'advertisementsController');

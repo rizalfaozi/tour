@@ -21,12 +21,18 @@ class agentsRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'name',
+        'office_name',
         'role_id',
         'password',
         'email',
         'photo',
         'phone',
         'address',
+        'province_id',
+        'district_id',
+        'bank',
+        'account_number',
+        'account_name',
         'gender',
         'type',
         'status'

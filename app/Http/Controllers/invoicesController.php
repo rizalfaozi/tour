@@ -12,7 +12,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\categories;
 use App\Models\members;
-
+use DB;
 
 class invoicesController extends AppBaseController
 {
@@ -46,10 +46,33 @@ class invoicesController extends AppBaseController
      */
     public function create()
     {
+        $tgl_skr = date('Ymd');
+       
+        $cek_kode = DB::table('invoices')
+        ->select('invoice_number')
+        ->where('invoice_number','like',''.$tgl_skr.'%')->get();
+        if(empty($cek_kode->invoice_number))
+        {
+
+            $max = DB::table('invoices')->max('invoice_number');
+            if($max ==null)
+            {
+                $invoice_code = $tgl_skr.'001';
+            }else{
+                $invoice_code = $max+1;
+            }    
+            
+        }    
+
+       
+        
         $categories = categories::select('id','name')->where('status','1')->orderBy('id','desc')->get();
 
-        $members = members::select('id','first_name','last_name')->orderBy('id','desc')->get();
-        return view('invoices.create')->with(['categories'=>$categories,'members'=> $members]);
+        $members = members::select('id','first_name','last_name')
+        ->orderBy('id','desc')
+        ->where('type','jamaah')
+        ->get();
+        return view('invoices.create')->with(['categories'=>$categories,'members'=> $members,'invoice_number'=>$invoice_code]);
     }
 
     /**
@@ -61,6 +84,7 @@ class invoicesController extends AppBaseController
      */
     public function store(CreateinvoicesRequest $request)
     {
+        $input['invoice_number'] = $request->invoice_number;
         $input['member_id'] = $request->member_id;
         $input['user_id'] = $request->user_id;
         $input['category_id'] = $request->category_id;
@@ -69,7 +93,36 @@ class invoicesController extends AppBaseController
         $input['type'] = $request->type; 
         $input['status'] = $request->status; 
 
+        if($request->bank =="")
+        {
+          $input['bank'] = "null";
+        }else{
+            $input['bank'] = $request->bank;  
+        }
+       
+        if($request->account_number =="")
+        {
+          $input['account_number'] = "null";
+        }else{
+           $input['account_number'] = $request->account_number;   
+        }
+
+        if($request->account_name =="")
+        {
+          $input['account_name'] = "null";
+        }else{
+           $input['account_name'] = $request->account_name;   
+        }  
+        
+        
+        $input['payment'] = $request->payment; 
+
         $invoices = $this->invoicesRepository->create($input);
+
+        if($request->type =="lunas")
+        {
+            DB::table('invoices_details')->insert(['invoice_number'=>$request->invoice_number,'member_id'=>$request->member_id,'total'=>$request->total,'category_id'=>$request->category_id,'status'=>0,'created_at'=>date("Y-m-d H:i:s")]);
+        }    
 
         Flash::success('Invoices saved successfully.');
 
@@ -162,13 +215,28 @@ class invoicesController extends AppBaseController
 
         $this->invoicesRepository->delete($id);
 
+         if($invoices->type =="lunas")
+         {
+            DB::table('invoices_details')->where('invoice_number',$invoices->invoice_number)->delete();
+            DB::table('members')->where('id',$invoices->member_id)->update(['type'=>'jamaah']);
+         } 
+
+
+
         Flash::success('Invoices deleted successfully.');
 
         return redirect(route('invoices.index'));
     }
 
     public function paket(request $request){
-      $total = categories::where('id',$request->id)->first()->price;
+        if($request->id =="")
+        {
+           $total = 0;
+
+        }else{
+           $total = categories::where('id',$request->id)->first()->price;  
+        }    
+     
       return $total;
     }
 

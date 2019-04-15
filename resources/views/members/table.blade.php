@@ -1,7 +1,6 @@
-<table class="table table-responsive" id="members-table">
+<table  id="example" class="table  table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
-           
         <th>Photo</th>
         <th> Nama Lengkap</th>
         <th>Umur</th>
@@ -10,26 +9,21 @@
         <th>No Passpor</th>
         <th>No Visa</th>
         <th>Status</th>
-      
-        <th colspan="3">Action</th>
+        <th >Action</th>
         </tr>
     </thead>
     <tbody>
     @foreach($members as $member)
         <tr>
-            <!-- <td>{!! $member->user_id !!}</td> -->
-            <td><img src="{!! asset( $member->photo) !!}") width="100"></td>
+            
+            <td><img src="@if(isset($member) ? $member->photo != '' : false){!! $member->photo !!}@else {{ asset('files/photo/default.png') }}  @endif" width="50"
+                height="50"></td>
             <td>{!! $member->first_name !!} {!! $member->last_name !!}</td>
             <td>{!! $member->age !!} Tahun</td>
             <td>{!! $member->phone !!}</td>
-           
-          
             <td>{!! $member->id_card !!}</td>
             <td>{!! $member->passport_number !!}</td>
-          
-            
             <td>{!! $member->visa_number !!}</td>
-           
             <td> @if($member->status>0)
                Aktif
              @else
@@ -49,3 +43,12 @@
     @endforeach
     </tbody>
 </table>
+
+<style type="text/css">
+    #example_paginate .pagination{
+         margin: 0px 0;
+         position: relative;
+         top:-6px;
+        float: right;
+    }   
+</style>

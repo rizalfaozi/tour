@@ -21,8 +21,13 @@ class categoriesRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'name',
+        'type',
         'price',
         'departure_date',
+        'flight',
+        'hotel',
+        'description',
+        'quota',
         'status'
     ];
 

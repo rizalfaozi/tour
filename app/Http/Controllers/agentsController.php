@@ -13,7 +13,7 @@ use Response;
 use App\Criteria\agentsCriteria;
 use Intervention\Image\ImageManagerStatic as Image;
 use File;
-
+use DB;
 class agentsController extends AppBaseController
 {
     /** @var  agentsRepository */
@@ -48,7 +48,8 @@ class agentsController extends AppBaseController
     public function create(Request $request)
     {
         $type = $request->get('type'); 
-        return view('agents.create')->with('type',$type);
+         $provinsi = DB::table('provinces')->get();
+        return view('agents.create')->with(['type'=>$type,'provinsi'=>$provinsi]);
     }
 
     /**
@@ -63,14 +64,18 @@ class agentsController extends AppBaseController
         $type = $request->get('type');  
         // $input = $request->all();
         $input['name'] = $request->name;
+        $input['office_name'] = $request->office_name;
         $input['email'] = $request->email;
         $input['gender'] = $request->gender;
         $input['role_id'] = 3;
         $input['type'] = $type;
         $input['phone'] = $request->phone;
         $input['address'] = $request->address;
-
-
+        $input['province_id'] = $request->province_id;
+        $input['district_id'] = $request->district_id;
+        $input['bank'] = $request->bank;
+        $input['account_number'] = $request->account_number;
+        $input['account_name'] = $request->account_name;
          if($request->photo=='') 
         {
                     
@@ -96,8 +101,8 @@ class agentsController extends AppBaseController
         }
 
 
-       
-        $input['password'] = bcrypt($request->pasword);
+        $password = 'agen'.$request->name;
+        $input['password'] = bcrypt($password);
         $input['status'] = $request->status;
 
         $agents = $this->agentsRepository->create($input);
@@ -139,14 +144,14 @@ class agentsController extends AppBaseController
     {
         $type = $request->get('type'); 
         $agents = $this->agentsRepository->findWithoutFail($id);
-
+         $provinsi = DB::table('provinces')->get();
         if (empty($agents)) {
             Flash::error('Agents not found');
 
             return redirect(url('agents?type'.$type));
         }
 
-        return view('agents.edit')->with(['agents'=> $agents,'type'=>$type]);
+        return view('agents.edit')->with(['agents'=> $agents,'type'=>$type,'provinsi'=>$provinsi]);
     }
 
     /**
@@ -168,13 +173,18 @@ class agentsController extends AppBaseController
         }
 
         $input['name'] = $request->name;
+        $input['office_name'] = $request->office_name;
         $input['email'] = $request->email;
         $input['gender'] = $request->gender;
         $input['role_id'] = 3;
         $input['type'] = $agents->type;
         $input['phone'] = $request->phone;
         $input['address'] = $request->address;
-
+        $input['province_id'] = $request->province_id;
+        $input['district_id'] = $request->district_id;
+        $input['bank'] = $request->bank;
+        $input['account_number'] = $request->account_number;
+        $input['account_name'] = $request->account_name;
 
          if($agents->photo!='') 
         {

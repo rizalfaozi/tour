@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use DB;
 
 class categoriesController extends AppBaseController
 {
@@ -30,8 +31,9 @@ class categoriesController extends AppBaseController
     public function index(Request $request)
     {
         $this->categoriesRepository->pushCriteria(new RequestCriteria($request));
-        $categories = $this->categoriesRepository->all();
-
+       $categories = $this->categoriesRepository->all();
+      
+      
         return view('categories.index')
             ->with('categories', $categories);
     }
@@ -152,4 +154,8 @@ class categoriesController extends AppBaseController
 
         return redirect(route('categories.index'));
     }
+
+
+
+   
 }

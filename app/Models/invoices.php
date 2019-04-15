@@ -29,10 +29,15 @@ class invoices extends Model
 
 
     public $fillable = [
+        'invoice_number',
         'category_id',
         'member_id',
         'user_id',
         'price',
+        'bank',
+        'account_number',
+        'account_name',
+        'payment',
         'total',
         'type',
         'status'
@@ -44,10 +49,15 @@ class invoices extends Model
      * @var array
      */
     protected $casts = [
+        'invoice_number'=>'string',
         'category_id' => 'integer',
         'member_id' => 'integer',
-         'user_id' => 'integer',
+        'user_id' => 'integer',
         'price' => 'string',
+        'bank'=> 'string',
+        'account_number'=> 'string',
+        'account_name'=> 'string',
+        'payment'=> 'string',
         'total' => 'string',
         'type' => 'string',
         'status' => 'integer'
@@ -59,10 +69,14 @@ class invoices extends Model
      * @var array
      */
     public static $rules = [
+        'invoice_number'=>'required',
         'category_id' => 'required',
         'member_id' => 'required',
         'user_id' => 'required',
         'price' => 'required',
+        
+       
+        'payment'=> 'required',
         'total' => 'required',
         'type' => 'required',
         'status' => 'required'
@@ -73,9 +87,6 @@ class invoices extends Model
     {
         return $this->belongsTo('App\Models\categories');
     }
-
-
-    
 
      public function member()
     {

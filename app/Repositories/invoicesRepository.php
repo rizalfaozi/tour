@@ -20,10 +20,15 @@ class invoicesRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
+        'invoice_number',
         'category_id',
         'member_id',
         'user_id',
         'price',
+        'bank',
+        'account_number',
+        'account_name',
+        'payment',
         'total',
         'type',
         'status'

@@ -52,7 +52,6 @@ class members extends Model
         'gender',
         'id_card',
         'passport_number',
-        'bank_account_number',
         'photo',
         'visa_number',
         'type',

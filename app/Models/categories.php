@@ -25,8 +25,13 @@ class categories extends Model
 
     public $fillable = [
         'name',
+        'type',
         'price',
         'departure_date',
+        'flight',
+        'hotel',
+        'description',
+        'quota',
         'status'
     ];
 
@@ -37,8 +42,13 @@ class categories extends Model
      */
     protected $casts = [
         'name' => 'string',
+        'type' => 'string',
         'price' => 'string',
-        'departure_date'=> 'string',
+        'departure_date'=> 'date',
+        'flight'=> 'string',
+        'hotel'=> 'string',
+        'description'=>'text',
+        'quota'=>'integer',
         'status' => 'integer'
     ];
 
@@ -49,13 +59,18 @@ class categories extends Model
      */
     public static $rules = [
         'name' => 'required',
+        'type'=>'required',
         'price' => 'required',
         'departure_date'=> 'required',
+        'flight'=> 'required',
+        'hotel'=> 'required',
+        'description'=>'required',
+        'quota'=>'required',
         'status' => 'required'
     ];
 
 
-
+   
 
 
 

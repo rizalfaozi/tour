@@ -1,0 +1,12 @@
+#example_filter{
+	float: right;
+}
+
+
+#example_filter label input{
+       margin: 0px 7px;
+       border-radius:3px;
+}
+
+
+

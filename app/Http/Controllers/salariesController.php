@@ -11,9 +11,11 @@ use App\models\salaries;
 use App\User;
 use App\Models\members;
 use App\Models\invoices;
+use App\Models\histories;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use Auth;
 
 class salariesController extends AppBaseController
 {
@@ -167,5 +169,33 @@ class salariesController extends AppBaseController
 
       $closing = invoices::where(['user_id'=>$request->id,'type'=>'lunas'])->count();
       return $closing;
+    }
+
+
+    public function withdraw(Request $request){
+        $user = Auth::user();
+        $message = "<span style='text-transform:capitalize;'>$user->type <b>$user->name</b></span> meminta gaji dan komisi segera diproses"; 
+        $closing = histories::create(['user_id'=>$user->id,'message'=>$message]);
+         $update = salaries::where(['user_id'=>$user->id])->update(['status'=>1]);
+      
+        Flash::success('Withdraw anda segera akan kami proses 1x24 jam. mohon bersabar');
+
+        return redirect(url('histories'));
+    }
+
+
+     public function verifikasi($user_id,$id,Request $request)
+    {
+         $user = User::where('id',$user_id)->select('name','type')->first();
+
+         $message = "<span style='text-transform:capitalize;'>$user->type <b>$user->name</b></span> withdraw anda sudah kami proses segera check rekening anda"; 
+     
+
+       $closing = histories::create(['user_id'=>$user_id,'message'=>$message]);
+
+      $verifikasi = salaries::where(['user_id'=>$user_id,'id'=>$id])->update(['status'=>2]);
+       Flash::success('Withdraw anda sudah kami proses segera check rekening anda');
+
+       return redirect(url('histories'));
     }
 }
